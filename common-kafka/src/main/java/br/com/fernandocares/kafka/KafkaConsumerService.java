@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 
 public class KafkaConsumerService<T> implements Closeable {
@@ -33,7 +34,7 @@ public class KafkaConsumerService<T> implements Closeable {
         this.consumer = consumer;
     }
 
-    void run() throws InterruptedException {
+    void run() {
         while(true) {
             var records = kafka.poll(Duration.ofMillis(100));
 
@@ -41,7 +42,15 @@ public class KafkaConsumerService<T> implements Closeable {
                 System.out.println("MENSAGEM ENCONTRADA");
 
                 for (var record : records) {
-                    consumer.consume(record);
+                    try {
+                        consumer.consume(record);
+                    } catch (ExecutionException e) {
+                        // TODO handle with exception
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        // TODO handle with exception
+                        e.printStackTrace();
+                    }
                 }
             }
         }
