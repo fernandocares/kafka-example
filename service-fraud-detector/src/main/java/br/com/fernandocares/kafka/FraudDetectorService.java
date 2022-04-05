@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 public class FraudDetectorService {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         var fraudDetectorService = new FraudDetectorService();
 
         try(var kafkaConsumerService = new KafkaConsumerService<>(

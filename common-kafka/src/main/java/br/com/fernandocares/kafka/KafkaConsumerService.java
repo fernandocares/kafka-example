@@ -44,10 +44,7 @@ public class KafkaConsumerService<T> implements Closeable {
                 for (var record : records) {
                     try {
                         consumer.consume(record);
-                    } catch (ExecutionException e) {
-                        // TODO handle with exception
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         // TODO handle with exception
                         e.printStackTrace();
                     }
